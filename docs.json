@@ -4,8 +4,8 @@
   "name": "Saguaro Transport",
   "colors": {
     "primary": "#CB594D",
-    "light": "#f1f5f9",
-    "dark": "#0f172a"
+    "light": "#CB594D",
+    "dark": "#CB594D"
   },
   "favicon": "/favicon.svg",
   "navigation": {
