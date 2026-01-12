@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Saguaro Transport",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#CB594D",
+    "light": "#f1f5f9",
+    "dark": "#0f172a"
   },
   "favicon": "/favicon.svg",
   "navigation": {
