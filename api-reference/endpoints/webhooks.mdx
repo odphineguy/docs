@@ -1,0 +1,59 @@
+---
+title: "Webhooks"
+description: "Receive real-time shipment updates"
+---
+
+## Overview
+
+Webhooks allow you to receive real-time notifications when shipment events occur. Instead of polling our API, we'll send HTTP POST requests to your endpoint.
+
+## Setting Up Webhooks
+
+1. Log in to your Client Portal
+2. Navigate to **Settings > Webhooks**
+3. Add your endpoint URL
+4. Select which events to receive
+5. Save and test your webhook
+
+## Webhook Events
+
+| Event | Description |
+|-------|-------------|
+| `shipment.created` | New shipment created |
+| `shipment.dispatched` | Driver assigned |
+| `shipment.picked_up` | Cargo picked up |
+| `shipment.in_transit` | Shipment in transit |
+| `shipment.delivered` | Successfully delivered |
+| `shipment.exception` | Issue or delay occurred |
+
+## Webhook Payload
+
+```json
+{
+  "event": "shipment.delivered",
+  "timestamp": "2024-01-15T14:25:00Z",
+  "data": {
+    "tracking_number": "SGT-2024-00001",
+    "status": "delivered",
+    "delivered_at": "2024-01-15T14:25:00Z",
+    "signed_by": "Jane Receiver"
+  }
+}
+```
+
+## Verifying Webhooks
+
+Each webhook includes a signature header for verification:
+
+```
+X-Saguaro-Signature: sha256=abc123...
+```
+
+Verify by computing HMAC-SHA256 of the payload using your webhook secret.
+
+## Retry Policy
+
+Failed webhooks are retried:
+- 3 attempts over 1 hour
+- Exponential backoff between retries
+- After 3 failures, webhook is disabled (you'll be notified)

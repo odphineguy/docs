@@ -1,0 +1,45 @@
+---
+title: "Authentication"
+description: "How to authenticate with the Saguaro API"
+---
+
+## API Keys
+
+All API requests require authentication using an API key passed in the header.
+
+```bash
+curl -X GET "https://api.saguarotransport.com/v1/shipments" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+## Obtaining API Keys
+
+1. Log in to your Client Portal
+2. Navigate to **Settings > API Access**
+3. Click **Generate New Key**
+4. Copy and securely store your key
+
+<Warning>
+API keys grant full access to your account. Never share them or commit them to version control.
+</Warning>
+
+## Environments
+
+| Environment | Base URL |
+|-------------|----------|
+| Sandbox | `https://sandbox-api.saguarotransport.com/v1` |
+| Production | `https://api.saguarotransport.com/v1` |
+
+Use the sandbox environment for testing. Data in sandbox is isolated from production.
+
+## Error Responses
+
+Authentication errors return HTTP 401:
+
+```json
+{
+  "error": "unauthorized",
+  "message": "Invalid or missing API key"
+}
+```

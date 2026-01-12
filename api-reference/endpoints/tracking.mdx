@@ -1,0 +1,76 @@
+---
+title: "Tracking"
+description: "Track shipment status and location"
+---
+
+## Get Tracking Status
+
+Get the current status and location of a shipment.
+
+```bash
+GET /tracking/{tracking_number}
+```
+
+### Response
+
+```json
+{
+  "tracking_number": "SGT-2024-00001",
+  "status": "in_transit",
+  "eta": "2024-01-15T14:30:00Z",
+  "current_location": {
+    "lat": 32.2226,
+    "lng": -110.9747,
+    "address": "I-10 near Tucson, AZ",
+    "updated_at": "2024-01-15T13:45:00Z"
+  },
+  "timeline": [
+    {
+      "status": "scheduled",
+      "timestamp": "2024-01-14T15:30:00Z",
+      "description": "Shipment created"
+    },
+    {
+      "status": "dispatched",
+      "timestamp": "2024-01-15T07:00:00Z",
+      "description": "Driver assigned"
+    },
+    {
+      "status": "picked_up",
+      "timestamp": "2024-01-15T09:15:00Z",
+      "description": "Picked up from origin"
+    },
+    {
+      "status": "in_transit",
+      "timestamp": "2024-01-15T09:20:00Z",
+      "description": "In transit to destination"
+    }
+  ]
+}
+```
+
+## Get Proof of Delivery
+
+Retrieve proof of delivery for completed shipments.
+
+```bash
+GET /tracking/{tracking_number}/pod
+```
+
+### Response
+
+```json
+{
+  "tracking_number": "SGT-2024-00001",
+  "delivered_at": "2024-01-15T14:25:00Z",
+  "signed_by": "Jane Receiver",
+  "signature_url": "https://cdn.saguarotransport.com/pod/sig_abc123.png",
+  "photos": [
+    "https://cdn.saguarotransport.com/pod/photo_001.jpg"
+  ],
+  "location": {
+    "lat": 32.2217,
+    "lng": -110.9265
+  }
+}
+```

@@ -1,0 +1,77 @@
+---
+title: "Shipments"
+description: "Create and manage shipments"
+---
+
+## Create Shipment
+
+Create a new shipment request.
+
+```bash
+POST /shipments
+```
+
+### Request Body
+
+```json
+{
+  "type": "freight",
+  "origin": {
+    "address": "123 Pickup St",
+    "city": "Phoenix",
+    "state": "AZ",
+    "zip": "85001",
+    "contact_name": "John Sender",
+    "contact_phone": "602-555-0100"
+  },
+  "destination": {
+    "address": "456 Delivery Ave",
+    "city": "Tucson",
+    "state": "AZ",
+    "zip": "85701",
+    "contact_name": "Jane Receiver",
+    "contact_phone": "520-555-0200"
+  },
+  "pickup_window": {
+    "start": "2024-01-15T08:00:00Z",
+    "end": "2024-01-15T12:00:00Z"
+  },
+  "notes": "Fragile items - handle with care"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "ship_abc123",
+  "status": "scheduled",
+  "tracking_number": "SGT-2024-00001",
+  "created_at": "2024-01-14T15:30:00Z"
+}
+```
+
+## Get Shipment
+
+Retrieve shipment details by ID.
+
+```bash
+GET /shipments/{shipment_id}
+```
+
+## List Shipments
+
+List all shipments for your account.
+
+```bash
+GET /shipments
+```
+
+### Query Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| status | Filter by status (scheduled, in_transit, delivered) |
+| from_date | Start date for date range |
+| to_date | End date for date range |
+| limit | Number of results (default 25, max 100) |

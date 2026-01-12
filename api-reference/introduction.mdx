@@ -1,33 +1,39 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Introduction"
+description: "Integrate your systems with Saguaro Transport"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Enterprise API
 
-## Welcome
+The Saguaro Transport API allows enterprise customers to integrate directly with our platform. Connect your ERP, TMS, or custom systems to:
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+- Create and track shipments programmatically
+- Receive real-time status updates via webhooks
+- Access proof of delivery data
+- Automate invoicing and reporting
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Base URL
 
-## Authentication
-
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
-
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
 ```
+https://api.saguarotransport.com/v1
+```
+
+## Getting Started
+
+1. Contact your account manager to request API access
+2. Receive your API credentials
+3. Review the authentication guide
+4. Test in our sandbox environment
+5. Go live with production credentials
+
+## Rate Limits
+
+| Plan | Requests per minute |
+|------|---------------------|
+| Standard | 60 |
+| Enterprise | 300 |
+| Custom | Contact us |
+
+## Support
+
+For API support, contact api-support@saguarotransport.com
