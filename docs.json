@@ -44,6 +44,14 @@
               "client/tracking",
               "client/invoices"
             ]
+          },
+          {
+            "group": "People & HR",
+            "pages": [
+              "people/overview",
+              "people/employee-onboarding",
+              "people/admin-onboarding"
+            ]
           }
         ]
       },

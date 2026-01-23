@@ -1,0 +1,180 @@
+---
+title: 'Managing Employee Onboarding'
+description: 'Add new employees and track their onboarding progress'
+---
+
+The HR Admin dashboard allows you to add new employees, track onboarding progress, and review submitted documents.
+
+## Adding a New Employee
+
+<Steps>
+  <Step title="Navigate to Employees">
+    Go to **People > Employees** or `/people/employees`
+  </Step>
+  <Step title="Click Add Employee">
+    Click the **Add Employee** button in the top right
+  </Step>
+  <Step title="Fill in Details">
+    Complete the employee information form
+  </Step>
+  <Step title="Submit">
+    Click **Add Employee** to create their account
+  </Step>
+</Steps>
+
+### Required Information
+
+| Field | Description |
+|-------|-------------|
+| **Full Name** | Employee's legal name |
+| **Email** | Used for login and communications |
+| **Job Title** | Their position at the company |
+| **Department** | Select from dropdown |
+| **Worker Type** | Employee, Contractor, or Temporary |
+| **Hire Date** | Official start date |
+
+### What Happens Next
+
+When you add an employee, the system automatically:
+
+1. Creates a user account with temporary password
+2. Generates an Employee ID (format: `ST-XXXX`)
+3. Sets their status to `pending_confirmation`
+4. Sends an invitation email to complete onboarding
+
+<Note>
+The employee will receive an email with a link to access the onboarding portal at `/onboarding`
+</Note>
+
+## Tracking Onboarding Progress
+
+### Onboarding Dashboard
+
+Navigate to **People > Onboarding** or `/people/onboarding` to see:
+
+| Metric | Description |
+|--------|-------------|
+| **Pending Onboarding** | Employees still completing steps |
+| **Fully Onboarded** | Employees with active status |
+| **Total Employees** | All employees in the system |
+
+### Filtering Employees
+
+Use the filter buttons to view:
+- **All** - All employees regardless of status
+- **Pending** - Only employees with incomplete onboarding
+- **Completed** - Only fully onboarded employees
+
+### Employee Detail View
+
+Click on any employee to view their detailed onboarding status at `/people/onboarding/[employeeId]`:
+
+- Progress bar showing completed steps
+- Timestamp for each completed step
+- List of submitted documents
+
+## Reviewing Documents
+
+### Document Tab
+
+From the employee detail view, click the **Documents** tab to see all submitted documents.
+
+Each document shows:
+- Document type (W-9, W-4, Direct Deposit)
+- Submission date and time
+- Electronic signature
+- Current approval status
+
+### Approving Documents
+
+<Steps>
+  <Step title="Review Information">
+    Verify the form data and signature are correct
+  </Step>
+  <Step title="Click Approve">
+    Click the **Approve** button on the document
+  </Step>
+  <Step title="Confirmation">
+    The status changes to **Approved** with a timestamp
+  </Step>
+</Steps>
+
+### Rejecting Documents
+
+If a document needs corrections:
+
+1. Click **Reject** on the document
+2. The employee is notified to resubmit
+3. They can submit a corrected version from their portal
+
+## Re-onboarding an Employee
+
+To have an existing employee go through onboarding again:
+
+<Warning>
+This requires database access. Contact your system administrator to run this query.
+</Warning>
+
+```sql
+UPDATE drivers
+SET
+  onboarding_status = 'pending_confirmation',
+  onboarding_step = 1,
+  code_of_ethics_signed_at = NULL,
+  w9_submitted_at = NULL,
+  tax_withholding_submitted_at = NULL,
+  direct_deposit_submitted_at = NULL,
+  onboarding_completed_at = NULL
+WHERE id = 'employee-uuid-here';
+```
+
+After running this query:
+- The employee appears in the **Pending** filter
+- They can access `/onboarding` to complete steps again
+- All previous timestamps are cleared
+
+## Onboarding Steps Reference
+
+| Step | Name | Database Field |
+|------|------|----------------|
+| 1 | Sign Documents | — |
+| 2 | Code of Ethics | `code_of_ethics_signed_at` |
+| 3 | W-9 Form | `w9_submitted_at` |
+| 4 | Tax Withholding | `tax_withholding_submitted_at` |
+| 5 | Direct Deposit | `direct_deposit_submitted_at` |
+
+## Status Reference
+
+| Status | Database Value | Meaning |
+|--------|----------------|---------|
+| Pending | `pending_confirmation` | Onboarding in progress |
+| Active | `active` | Onboarding complete |
+| Suspended | `suspended` | Account disabled |
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Employee not appearing in onboarding list">
+    - Check the **All** filter to see all employees
+    - They may already have `active` status
+    - Verify their record exists in the database
+  </Accordion>
+
+  <Accordion title="Documents not showing for employee">
+    - Confirm the employee has accessed the onboarding portal
+    - Check that they've actually submitted documents
+    - Verify the document types match (`w9`, `w4`, `direct_deposit`)
+  </Accordion>
+
+  <Accordion title="Onboarding step not advancing">
+    - Check for browser console errors on employee's device
+    - Verify RLS policies allow updates to the `drivers` table
+    - May need to manually update `onboarding_step` via database
+  </Accordion>
+
+  <Accordion title="Employee didn't receive invitation email">
+    - Verify the email address is correct
+    - Check their spam/junk folder
+    - Resend the invitation from the employee detail page
+  </Accordion>
+</AccordionGroup>

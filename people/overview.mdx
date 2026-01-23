@@ -1,0 +1,73 @@
+---
+title: 'People & HR'
+description: 'Employee lifecycle management from onboarding to offboarding'
+---
+
+The People & HR module provides comprehensive employee management for Saguaro Transport, handling the complete employee lifecycle including onboarding, document management, and offboarding.
+
+## Module Features
+
+<CardGroup cols={2}>
+  <Card title="Employee Onboarding" icon="user-plus" href="/people/employee-onboarding">
+    Self-service portal for new employees to complete required paperwork
+  </Card>
+  <Card title="Admin Management" icon="users-gear" href="/people/admin-onboarding">
+    Track onboarding progress and review submitted documents
+  </Card>
+</CardGroup>
+
+## Portal Locations
+
+| Portal | URL | Audience |
+|--------|-----|----------|
+| Employee Onboarding | `/onboarding` | New employees |
+| HR Admin Dashboard | `/people/onboarding` | HR administrators |
+| Employee Directory | `/people/employees` | HR administrators |
+
+## Onboarding Process Overview
+
+The onboarding system uses a 5-step workflow:
+
+<Steps>
+  <Step title="Sign Documents">
+    Employment agreement and company policies acknowledgment
+  </Step>
+  <Step title="Code of Ethics">
+    Review and sign the company Code of Ethics
+  </Step>
+  <Step title="W-9 Form">
+    Tax identification form with SSN/EIN
+  </Step>
+  <Step title="Tax Withholding">
+    Federal tax withholding preferences (W-4)
+  </Step>
+  <Step title="Direct Deposit">
+    Bank account information for payroll
+  </Step>
+</Steps>
+
+## How It Works
+
+### For HR Administrators
+
+1. Navigate to **People > Employees**
+2. Click **Add Employee** and fill in their details
+3. System creates their account and sends an invitation email
+4. Track their progress at **People > Onboarding**
+5. Review and approve submitted documents
+
+### For New Employees
+
+1. Receive invitation email from HR
+2. Click the confirmation link to access the portal
+3. Complete each onboarding step in order
+4. Sign documents electronically using the signature pad
+5. Once complete, gain access to the Driver Portal
+
+## Employee Statuses
+
+| Status | Description |
+|--------|-------------|
+| `pending_confirmation` | Account created, awaiting onboarding completion |
+| `active` | Onboarding complete, full system access |
+| `suspended` | Account disabled (terminated employee) |
